@@ -1,6 +1,7 @@
 package com.gturedi.flickr.ui;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -8,10 +9,12 @@ import com.gturedi.flickr.R;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by gturedi on 7.02.2017.
  */
-public class BaseActivity
+public abstract class BaseActivity
         extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
@@ -20,6 +23,15 @@ public class BaseActivity
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    public abstract int getLayout();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+        ButterKnife.bind(this);
     }
 
     @Override

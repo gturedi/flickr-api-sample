@@ -3,16 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     android:orientation="vertical"
-    tools:context="com.gturedi.flickr.ui.MainActivity"
     >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvItems"
+    <ImageView
+        android:id="@+id/ivCover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/row_photo"
+        tools:src="@mipmap/ic_launcher"
         />
 
 </LinearLayout>

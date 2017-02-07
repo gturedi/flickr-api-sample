@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Awesome Flickr</string>
+    <string name="errorTitle">Error</string>
+    <string name="errorMessage">An error occurred please try again later</string>
 </resources>

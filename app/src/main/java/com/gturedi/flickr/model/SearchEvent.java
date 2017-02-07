@@ -1,4 +1,4 @@
-package com.gturedi.flickr;
+package com.gturedi.flickr.model;
 
 import java.util.List;
 

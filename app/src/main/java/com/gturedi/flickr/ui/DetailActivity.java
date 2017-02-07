@@ -3,14 +3,18 @@ package com.gturedi.flickr.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.R;
-import com.gturedi.flickr.model.SearchEvent;
+import com.gturedi.flickr.model.DetailEvent;
 import com.gturedi.flickr.service.FlickrService;
+import com.gturedi.flickr.util.AppUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import butterknife.BindView;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -20,6 +24,8 @@ public class DetailActivity
 
     public static final String EXTRA_ID = "ID";
     private FlickrService flickrService = FlickrService.INSTANCE;
+    @BindView(R.id.ivCover)
+    protected ImageView ivCover;
 
     public static Intent createIntent(Context context, long id) {
         return new Intent(context, DetailActivity.class).putExtra(EXTRA_ID, id);
@@ -45,11 +51,12 @@ public class DetailActivity
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(SearchEvent event) {
+    public void onMessageEvent(DetailEvent event) {
         dismissLoadingDialog();
         if (event.exception == null) {
+            Toast.makeText(this, event.item.title.toString(), Toast.LENGTH_SHORT).show();
         } else {
-            showErrorDialog();
+            showGeneralError();
         }
     }
 

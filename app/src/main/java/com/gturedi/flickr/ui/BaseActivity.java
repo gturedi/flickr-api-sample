@@ -11,6 +11,7 @@ import com.gturedi.flickr.R;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by gturedi on 7.02.2017.
@@ -30,6 +31,7 @@ public abstract class BaseActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Timber.i("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         ButterKnife.bind(this);
@@ -61,7 +63,7 @@ public abstract class BaseActivity
         progressDialog.show();
     }
 
-    protected void showErrorDialog() {
+    protected void showGeneralError() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.errorTitle)
                 .setMessage(R.string.errorMessage)

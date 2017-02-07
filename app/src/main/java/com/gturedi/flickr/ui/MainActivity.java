@@ -57,7 +57,7 @@ public class MainActivity
         if (event.exception == null) {
             adapter.addAll(event.items);
         } else {
-            showErrorDialog();
+            showGeneralError();
         }
     }
 

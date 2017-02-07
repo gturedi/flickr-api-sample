@@ -22,6 +22,7 @@ public class App
 
     @Override
     public void onCreate() {
+        Timber.i("onCreate");
         super.onCreate();
         instance = this;
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());

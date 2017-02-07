@@ -1,7 +1,10 @@
 package com.gturedi.flickr.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.gturedi.flickr.model.DetailEvent;
+import com.gturedi.flickr.model.PhotoInfoModel;
 import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.model.SearchEvent;
 
@@ -32,6 +35,7 @@ public class FlickrService {
     private static final String API_KEY = "04a42d236e746206fbbf64245342dd2d";
     private static final String URL_BASE = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=" + API_KEY;
     private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page="+PAGE_SIZE+"&extras=url_n&page=";
+    private static final String URL_DETAIL = "&method=flickr.photos.getInfo&photo_id=";
     private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String CACHE_PATH = "/data/data/" + com.gturedi.flickr.BuildConfig.APPLICATION_ID + "/cache/";
 
@@ -54,6 +58,32 @@ public class FlickrService {
         }).start();
     }
 
+    public void getDetailAsync(final long id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PhotoInfoModel items = getDetail(id);
+                    EventBus.getDefault().post(new DetailEvent(items, null));
+                } catch (IOException|JSONException e) {
+                    Timber.e(e);
+                    EventBus.getDefault().post(new DetailEvent(null, e));
+                }
+            }
+        }).start();
+    }
+
+    private PhotoInfoModel getDetail(long id) throws IOException, JSONException {
+        Request request = new Request.Builder()
+                .url(URL_BASE + URL_DETAIL + id)
+                .build();
+
+        Response response = getClient().newCall(request).execute();
+        String json = response.body().string();
+        JSONObject jsonObject = new JSONObject(json).getJSONObject("photo");
+        return getGson().fromJson(jsonObject.toString(), PhotoInfoModel.class);
+    }
+
     private List<PhotoModel> search(int page) throws IOException, JSONException {
         Request request = new Request.Builder()
                 .url(URL_BASE + URL_SEARCH + page)
@@ -64,7 +94,7 @@ public class FlickrService {
         JSONArray jsonArray = new JSONObject(json).getJSONObject("photos").getJSONArray("photo");
 
         Type listType = new TypeToken<List<PhotoModel>>(){}.getType();
-        return new Gson().fromJson(jsonArray.toString(), listType);
+        return getGson().fromJson(jsonArray.toString(), listType);
     }
 
     private OkHttpClient getClient() {
@@ -74,8 +104,8 @@ public class FlickrService {
                 .build();
     }
 
-    public void getDetailAsync(long id) {
-
+    private Gson getGson() {
+        return new GsonBuilder().create();
     }
 
 }

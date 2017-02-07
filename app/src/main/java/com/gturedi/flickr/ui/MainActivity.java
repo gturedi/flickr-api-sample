@@ -13,11 +13,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 public class MainActivity
         extends BaseActivity {
 
+    private FlickrService flickrService = FlickrService.INSTANCE;
     private PhotoAdapter adapter;
+    private boolean isLoading;
     private int page = 1;
 
     @BindView(R.id.rvItems)
@@ -32,17 +35,41 @@ public class MainActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showLoadingDialog();
-        FlickrService.INSTANCE.searchAsync(page);
-
         adapter = new PhotoAdapter();
         rvItems.setAdapter(adapter);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
+        rvItems.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                if (!isLoading) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= FlickrService.PAGE_SIZE) {
+                        sendRequest();
+                    }
+                }
+            }
+        });
+
+        sendRequest();
+    }
+
+    private void sendRequest() {
+        Timber.i("sendRequest: "+page);
+        showLoadingDialog();
+        isLoading = true;
+        flickrService.searchAsync(page++);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
         dismissLoadingDialog();
+        isLoading = false;
         if (event.exception == null) {
             adapter.addAll(event.items);
         } else {

@@ -13,7 +13,7 @@ public class AppUtil {
         Glide.with(App.getContext())
                 .load(url)
                 .centerCrop()
-                .placeholder(android.R.drawable.ic_dialog_info)
+                .placeholder(R.drawable.ic_image_24dp)
                 .crossFade()
                 .into(target);
     }

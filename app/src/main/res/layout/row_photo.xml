@@ -11,7 +11,7 @@
         android:id="@+id/ivCover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:src="@mipmap/ic_launcher"
+        tools:src="@drawable/ic_image_24dp"
         />
 
 </LinearLayout>

@@ -28,9 +28,10 @@ import timber.log.Timber;
 public class FlickrService {
 
     public static final FlickrService INSTANCE = new FlickrService();
+    public static final int PAGE_SIZE = 15;
     private static final String API_KEY = "04a42d236e746206fbbf64245342dd2d";
     private static final String URL_BASE = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=" + API_KEY;
-    private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page=15&extras=url_n&page=";
+    private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page="+PAGE_SIZE+"&extras=url_n&page=";
     private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String CACHE_PATH = "/data/data/" + com.gturedi.flickr.BuildConfig.APPLICATION_ID + "/cache/";
 

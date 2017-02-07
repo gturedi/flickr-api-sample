@@ -1,7 +1,6 @@
 package com.gturedi.flickr.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.model.SearchEvent;
@@ -19,19 +18,18 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        showLoadingDialog();
         FlickrService.INSTANCE.searchAsync(page);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
+        dismissLoadingDialog();
         if (event.exception == null) {
             // bind data
         } else {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.errorTitle)
-                    .setMessage(R.string.errorMessage)
-                    .setNegativeButton(android.R.string.ok, null)
-                    .show();
+            showErrorDialog();
         }
     }
 

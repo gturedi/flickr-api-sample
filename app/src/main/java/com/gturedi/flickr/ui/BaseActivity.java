@@ -1,6 +1,7 @@
 package com.gturedi.flickr.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -65,6 +66,19 @@ public abstract class BaseActivity
                 .setTitle(R.string.errorTitle)
                 .setMessage(R.string.errorMessage)
                 .setNegativeButton(R.string.close, null)
+                .show();
+    }
+
+    protected void showConnectionError() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.errorTitle)
+                .setMessage(R.string.connectionErrorMessage)
+                .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
                 .show();
     }
 

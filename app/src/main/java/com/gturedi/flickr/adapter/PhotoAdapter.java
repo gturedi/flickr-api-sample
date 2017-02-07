@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gturedi.flickr.R;
-import com.gturedi.flickr.AppUtil;
 import com.gturedi.flickr.model.PhotoModel;
+import com.gturedi.flickr.util.AppUtil;
+import com.gturedi.flickr.util.RowClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class PhotoAdapter
         extends RecyclerView.Adapter<PhotoViewHolder> {
 
     private final List<PhotoModel> items = new ArrayList<>();
+    private RowClickListener<PhotoModel> rowClickListener;
 
     @Override
     public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,14 +29,26 @@ public class PhotoAdapter
     }
 
     @Override
-    public void onBindViewHolder(PhotoViewHolder holder, int position) {
+    public void onBindViewHolder(PhotoViewHolder holder, final int position) {
         PhotoModel item = items.get(position);
         AppUtil.bindImage(item.url_n, holder.ivCover);
+        if (rowClickListener != null) {
+            holder.ivCover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rowClickListener.onRowClicked(position, items.get(position));
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void setRowClickListener(RowClickListener<PhotoModel> rowClickListener) {
+        this.rowClickListener = rowClickListener;
     }
 
     public void addAll(List<PhotoModel> items) {

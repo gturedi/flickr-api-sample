@@ -6,15 +6,17 @@ package com.gturedi.flickr.model;
 public class PhotoModel
         extends BaseModel {
 
-    public String id;
+    public long id;
     public String owner;
     public String secret;
     public String server;
-    public long farm;
+    public int farm;
     public String title;
-    public long ispublic;
-    public long isfriend;
-    public long isfamily;
+    public int ispublic;
+    public int isfriend;
+    public int isfamily;
     public String url_n;
+    public int height_n;
+    public int width_n;
 
 }

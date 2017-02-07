@@ -74,4 +74,8 @@ public class FlickrService {
                 .build();
     }
 
+    public void getDetailAsync(long id) {
+
+    }
+
 }

@@ -4,4 +4,5 @@
     <string name="errorMessage">An error occurred please try again later</string>
     <string name="close">Close</string>
     <string name="loading">Loading..</string>
+    <string name="connectionErrorMessage">Please chek your device connection</string>
 </resources>

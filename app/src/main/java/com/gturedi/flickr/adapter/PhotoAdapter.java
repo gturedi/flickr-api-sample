@@ -31,7 +31,7 @@ public class PhotoAdapter
     @Override
     public void onBindViewHolder(PhotoViewHolder holder, final int position) {
         PhotoModel item = items.get(position);
-        AppUtil.bindImage(item.url_n, holder.image);
+        AppUtil.bindImage(item.url_n, holder.image, true);
         if (rowClickListener != null) {
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override

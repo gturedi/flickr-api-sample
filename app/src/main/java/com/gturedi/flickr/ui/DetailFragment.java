@@ -37,7 +37,7 @@ public class DetailFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         PhotoModel item = (PhotoModel) getArguments().getSerializable(EXTRA_ITEM);
-        AppUtil.bindImage(item.url_n, image);
+        AppUtil.bindImage(item.url_n, image, false);
     }
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.widget.ImageView;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.gturedi.flickr.App;
 
@@ -19,13 +20,13 @@ public class AppUtil {
                 && connectivitymanager.getActiveNetworkInfo().isConnected();
     }
 
-    public static void bindImage(String url, ImageView target) {
-        Glide.with(App.getContext())
+    public static void bindImage(String url, ImageView target, boolean centerCrop) {
+        DrawableRequestBuilder<String> builder = Glide.with(App.getContext())
                 .load(url)
-                .centerCrop()
                 //.placeholder(R.drawable.ic_image_24dp)
-                .crossFade()
-                .into(target);
+                .crossFade();
+        if (centerCrop) builder.centerCrop();
+        builder.into(target);
     }
 
 }

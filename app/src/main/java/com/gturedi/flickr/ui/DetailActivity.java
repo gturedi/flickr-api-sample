@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class DetailActivity
     private int index;
     private List<PhotoModel> items;
     private FlickrService flickrService = FlickrService.INSTANCE;
+    private DetailEvent detailEvent;
 
     @BindView(R.id.pager) protected ViewPager pager;
     @BindView(R.id.tvOwner) protected TextView tvOwner;
@@ -74,6 +76,16 @@ public class DetailActivity
         finish();
     }
 
+    @OnClick(R.id.ivInfo)
+    public void onInfoClick(View v) {
+        if (detailEvent.exception != null) return;
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.description)
+                .setMessage(detailEvent.item.description.toString())
+                .setNegativeButton(R.string.close, null)
+                .show();
+    }
+
     @OnPageChange(R.id.pager)
     void onPageSelected(int position) {
         //showLoadingDialog();
@@ -87,6 +99,7 @@ public class DetailActivity
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(DetailEvent event) {
         //dismissLoadingDialog();
+        detailEvent = event;
         if (event.exception == null) {
             tvOwner.setText(event.item.owner.toString());
             tvTitle.setText(event.item.title.toString());

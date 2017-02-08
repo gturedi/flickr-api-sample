@@ -86,6 +86,15 @@ public class DetailActivity
                 .show();
     }
 
+    @OnClick(R.id.ivShare)
+    public void onShareClick(View v) {
+        if (detailEvent.exception != null) return;
+        startActivity(new Intent(Intent.ACTION_SEND)
+                .putExtra(Intent.EXTRA_SUBJECT, detailEvent.item.title)
+                .putExtra(Intent.EXTRA_TEXT, items.get(pager.getCurrentItem()).url_n)
+        );
+    }
+
     @OnPageChange(R.id.pager)
     void onPageSelected(int position) {
         //showLoadingDialog();

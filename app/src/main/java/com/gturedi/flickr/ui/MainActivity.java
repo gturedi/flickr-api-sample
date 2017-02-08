@@ -8,7 +8,7 @@ import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.PhotoAdapter;
-import com.gturedi.flickr.model.SearchEvent;
+import com.gturedi.flickr.model.event.SearchEvent;
 import com.gturedi.flickr.service.FlickrService;
 import com.gturedi.flickr.util.RowClickListener;
 
@@ -47,7 +47,7 @@ public class MainActivity
 
     @Override
     public void onRowClicked(int row, PhotoModel item) {
-        startActivity(DetailActivity.createIntent(this, item.id));
+        startActivity(DetailActivity.createIntent(this, row, adapter.getAll()));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -55,7 +55,7 @@ public class MainActivity
         dismissLoadingDialog();
         isLoading = false;
         if (event.exception == null) {
-            adapter.addAll(event.items);
+            adapter.addAll(event.item);
         } else {
             showGeneralError();
         }

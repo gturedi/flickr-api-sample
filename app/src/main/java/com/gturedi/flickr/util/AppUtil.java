@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.gturedi.flickr.App;
-import com.gturedi.flickr.R;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -24,7 +23,7 @@ public class AppUtil {
         Glide.with(App.getContext())
                 .load(url)
                 .centerCrop()
-                .placeholder(R.drawable.ic_image_24dp)
+                //.placeholder(R.drawable.ic_image_24dp)
                 .crossFade()
                 .into(target);
     }

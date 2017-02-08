@@ -31,9 +31,9 @@ public class PhotoAdapter
     @Override
     public void onBindViewHolder(PhotoViewHolder holder, final int position) {
         PhotoModel item = items.get(position);
-        AppUtil.bindImage(item.url_n, holder.ivCover);
+        AppUtil.bindImage(item.url_n, holder.image);
         if (rowClickListener != null) {
-            holder.ivCover.setOnClickListener(new View.OnClickListener() {
+            holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     rowClickListener.onRowClicked(position, items.get(position));
@@ -53,8 +53,11 @@ public class PhotoAdapter
 
     public void addAll(List<PhotoModel> items) {
         this.items.addAll(items);
-        notifyItemInserted(0);
         notifyDataSetChanged();
+    }
+
+    public List<PhotoModel> getAll() {
+        return items;
     }
 
 }

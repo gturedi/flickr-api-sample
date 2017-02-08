@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by gturedi on 7.02.2017.
  */
-class BaseModel
+public class BaseModel
         implements Serializable {
 
 }

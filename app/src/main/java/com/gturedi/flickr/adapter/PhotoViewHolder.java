@@ -15,8 +15,8 @@ import butterknife.ButterKnife;
 class PhotoViewHolder
         extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.ivCover)
-    protected ImageView ivCover;
+    @BindView(R.id.image)
+    protected ImageView image;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);

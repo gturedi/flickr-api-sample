@@ -3,10 +3,10 @@ package com.gturedi.flickr.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.gturedi.flickr.model.DetailEvent;
+import com.gturedi.flickr.model.event.DetailEvent;
 import com.gturedi.flickr.model.PhotoInfoModel;
 import com.gturedi.flickr.model.PhotoModel;
-import com.gturedi.flickr.model.SearchEvent;
+import com.gturedi.flickr.model.event.SearchEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -32,12 +32,14 @@ public class FlickrService {
 
     public static final FlickrService INSTANCE = new FlickrService();
     public static final int PAGE_SIZE = 15;
+    private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String API_KEY = "04a42d236e746206fbbf64245342dd2d";
     private static final String URL_BASE = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=" + API_KEY;
     private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page="+PAGE_SIZE+"&extras=url_n&page=";
     private static final String URL_DETAIL = "&method=flickr.photos.getInfo&photo_id=";
-    private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String CACHE_PATH = "/data/data/" + com.gturedi.flickr.BuildConfig.APPLICATION_ID + "/cache/";
+    private static final String COLUMN_PHOTO = "photo";
+    private static final String COLUMN_PHOTOS = "photos";
 
     private FlickrService() {
         // no instances
@@ -80,7 +82,7 @@ public class FlickrService {
 
         Response response = getClient().newCall(request).execute();
         String json = response.body().string();
-        JSONObject jsonObject = new JSONObject(json).getJSONObject("photo");
+        JSONObject jsonObject = new JSONObject(json).getJSONObject(COLUMN_PHOTO);
         return getGson().fromJson(jsonObject.toString(), PhotoInfoModel.class);
     }
 
@@ -91,7 +93,7 @@ public class FlickrService {
 
         Response response = getClient().newCall(request).execute();
         String json = response.body().string();
-        JSONArray jsonArray = new JSONObject(json).getJSONObject("photos").getJSONArray("photo");
+        JSONArray jsonArray = new JSONObject(json).getJSONObject(COLUMN_PHOTOS).getJSONArray(COLUMN_PHOTO);
 
         Type listType = new TypeToken<List<PhotoModel>>(){}.getType();
         return getGson().fromJson(jsonArray.toString(), listType);

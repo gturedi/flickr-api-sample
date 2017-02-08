@@ -7,11 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gturedi.flickr.R;
-import com.gturedi.flickr.model.event.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -44,11 +41,6 @@ public abstract class BaseActivity
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(BaseEvent event) {
-
     }
 
     protected void dismissLoadingDialog() {

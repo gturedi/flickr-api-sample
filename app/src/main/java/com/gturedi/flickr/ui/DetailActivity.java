@@ -86,13 +86,17 @@ public class DetailActivity
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(DetailEvent event) {
-        dismissLoadingDialog();
+        //dismissLoadingDialog();
         if (event.exception == null) {
-            tvOwner.setText(event.item.owner._content);
-            tvTitle.setText(event.item.title._content);
+            tvOwner.setText(event.item.owner.toString());
+            tvTitle.setText(event.item.title.toString());
             tvDate.setText(event.item.getFormattedDate());
-            tvViewCount.setText("Views "+event.item.views);
+            tvViewCount.setText(getString(R.string.views, event.item.views));
         } else {
+            tvOwner.setText("-");
+            tvTitle.setText("-");
+            tvDate.setText("-");
+            tvViewCount.setText("-");
             showGeneralError();
         }
     }

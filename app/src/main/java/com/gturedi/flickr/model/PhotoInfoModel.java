@@ -14,8 +14,8 @@ public class PhotoInfoModel
     public long id;
     public long dateuploaded;
     public long views;
-    public ContentModel comments;
-    public ContentModel owner;
+    //public ContentModel comments;
+    public OwnerModel owner;
     public ContentModel title;
     public ContentModel description;
 

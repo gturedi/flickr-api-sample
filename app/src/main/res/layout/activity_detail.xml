@@ -4,7 +4,6 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     >
 
     <android.support.v4.view.ViewPager
@@ -15,11 +14,13 @@
 
     <TextView
         android:id="@+id/tvOwner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_toLeftOf="@+id/ivClose"
         android:layout_margin="@dimen/keyLine1"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="17sp"
         tools:text="by gturedi"
         />
 
@@ -41,11 +42,15 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/keyLine1"
+            android:layout_toLeftOf="@+id/tvDate"
             android:textColor="@android:color/white"
+            android:maxLines="2"
             tools:text="winter is coming.."
+            android:layout_marginLeft="@dimen/keyLine1"
+            android:layout_marginTop="@dimen/keyLine1"
+            android:layout_marginBottom="@dimen/keyLine1"
             />
 
         <TextView

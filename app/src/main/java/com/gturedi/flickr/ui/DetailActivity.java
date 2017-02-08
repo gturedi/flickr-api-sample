@@ -3,8 +3,11 @@ package com.gturedi.flickr.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
+import timber.log.Timber;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -43,6 +47,8 @@ public class DetailActivity
     @BindView(R.id.tvTitle) protected TextView tvTitle;
     @BindView(R.id.tvDate) protected TextView tvDate;
     @BindView(R.id.tvViewCount) protected TextView tvViewCount;
+    @BindView(R.id.lnrFooter) protected View lnrFooter;
+    @BindView(R.id.ivClose) protected View ivClose;
 
     public static Intent createIntent(Context context, int index, List<PhotoModel> items) {
         return new Intent(context, DetailActivity.class)
@@ -65,6 +71,7 @@ public class DetailActivity
         } else if (!AppUtil.isConnected()) {
             showConnectionError();
         } else {
+            setPagerClickListener();
             pager.setAdapter(new DetailPagerAdapter(getSupportFragmentManager(), items));
             pager.setCurrentItem(index);
             onPageSelected(index);
@@ -95,6 +102,12 @@ public class DetailActivity
         );
     }
 
+    // not work http://stackoverflow.com/questions/10243690/onclick-on-viewpager-not-triggered
+    @OnClick(R.id.pager)
+    public void onPagerClick(View v) {
+        Timber.i("onPagerClick");
+    }
+
     @OnPageChange(R.id.pager)
     void onPageSelected(int position) {
         //showLoadingDialog();
@@ -121,6 +134,28 @@ public class DetailActivity
             tvViewCount.setText("-");
             showGeneralError();
         }
+    }
+
+    // http://stackoverflow.com/questions/10243690/onclick-on-viewpager-not-triggered
+    private void setPagerClickListener() {
+        final GestureDetectorCompat tapGestureDetector = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                int value = lnrFooter.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+                Timber.i("pagerClick: "+value);
+                lnrFooter.setVisibility(value);
+                ivClose.setVisibility(value);
+                tvOwner.setVisibility(value);
+                return true;
+            }
+        });
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                tapGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
     }
 
 }

@@ -9,18 +9,17 @@ import java.util.Date;
 public class PhotoInfoModel
         extends BaseModel {
 
-    private static final String DATE_PATTERN = "dd.MM.yyyy";
-
     public long id;
     public long dateuploaded;
     public long views;
-    //public ContentModel comments;
-    public OwnerModel owner;
     public ContentModel title;
     public ContentModel description;
+    public OwnerModel owner;
+    //public ContentModel comments;
 
     public String getFormattedDate() {
-        return new SimpleDateFormat(DATE_PATTERN).format(new Date(dateuploaded));
+        // service short timeStamp veriyor o yuzden bin ile carpiyoruz
+        return SimpleDateFormat.getDateInstance().format(new Date(dateuploaded* 1000));
     }
 
 }

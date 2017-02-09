@@ -2,7 +2,6 @@ package com.gturedi.flickr.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.ImageView;
 
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.model.ImageSize;
@@ -10,6 +9,7 @@ import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.util.AppUtil;
 
 import butterknife.BindView;
+import uk.co.senab.photoview.PhotoView;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -19,7 +19,7 @@ public class DetailFragment
 
     private static final String EXTRA_ITEM = "EXTRA_ITEM";
 
-    @BindView(R.id.image) protected ImageView image;
+    @BindView(R.id.image) protected PhotoView image;
 
     public static Fragment newInstance(PhotoModel item) {
         Bundle bundle = new Bundle();

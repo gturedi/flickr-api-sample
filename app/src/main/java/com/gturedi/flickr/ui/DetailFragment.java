@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
 import com.gturedi.flickr.R;
+import com.gturedi.flickr.model.ImageSize;
 import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.util.AppUtil;
 
@@ -37,7 +38,7 @@ public class DetailFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         PhotoModel item = (PhotoModel) getArguments().getSerializable(EXTRA_ITEM);
-        AppUtil.bindImage(item.url_n, image, false);
+        AppUtil.bindImage(item.getImageUrl(ImageSize.LARGE), image, false);
     }
 
 }

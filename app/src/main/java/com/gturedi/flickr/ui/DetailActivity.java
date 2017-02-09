@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.DetailPagerAdapter;
+import com.gturedi.flickr.model.ImageSize;
 import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.model.event.DetailEvent;
 import com.gturedi.flickr.service.FlickrService;
@@ -98,7 +99,7 @@ public class DetailActivity
         if (detailEvent.exception != null) return;
         startActivity(new Intent(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_SUBJECT, detailEvent.item.title)
-                .putExtra(Intent.EXTRA_TEXT, items.get(pager.getCurrentItem()).url_n)
+                .putExtra(Intent.EXTRA_TEXT, items.get(pager.getCurrentItem()).getImageUrl(ImageSize.LARGE))
         );
     }
 

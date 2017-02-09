@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gturedi.flickr.R;
+import com.gturedi.flickr.model.ImageSize;
 import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.util.RowClickListener;
@@ -46,7 +47,7 @@ public class PhotoAdapter
         if (holder instanceof PhotoViewHolder) {
             PhotoViewHolder vh = (PhotoViewHolder) holder;
             PhotoModel item = items.get(position);
-            AppUtil.bindImage(item.url_n, vh.image, true);
+            AppUtil.bindImage(item.getImageUrl(ImageSize.MEDIUM), vh.image, true);
             if (rowClickListener != null) {
                 vh.image.setOnClickListener(new View.OnClickListener() {
                     @Override

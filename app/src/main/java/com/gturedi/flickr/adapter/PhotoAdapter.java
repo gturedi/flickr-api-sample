@@ -17,28 +17,44 @@ import java.util.List;
  * Created by gturedi on 8.02.2017.
  */
 public class PhotoAdapter
-        extends RecyclerView.Adapter<PhotoViewHolder> {
+        extends RecyclerView.Adapter {
+
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG = 0;
 
     private final List<PhotoModel> items = new ArrayList<>();
     private RowClickListener<PhotoModel> rowClickListener;
 
     @Override
-    public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_photo, parent, false);
-        return new PhotoViewHolder(itemView);
+    public int getItemViewType(int position) {
+        return items.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
     @Override
-    public void onBindViewHolder(PhotoViewHolder holder, final int position) {
-        PhotoModel item = items.get(position);
-        AppUtil.bindImage(item.url_n, holder.image, true);
-        if (rowClickListener != null) {
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rowClickListener.onRowClicked(position, items.get(position));
-                }
-            });
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_ITEM) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_photo, parent, false);
+            return new PhotoViewHolder(itemView);
+        } else {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_progress, parent, false);
+            return new ProgressViewHolder(itemView);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof PhotoViewHolder) {
+            PhotoViewHolder vh = (PhotoViewHolder) holder;
+            PhotoModel item = items.get(position);
+            AppUtil.bindImage(item.url_n, vh.image, true);
+            if (rowClickListener != null) {
+                vh.image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        rowClickListener.onRowClicked(position, items.get(position));
+                    }
+                });
+            }
         }
     }
 
@@ -51,13 +67,23 @@ public class PhotoAdapter
         this.rowClickListener = rowClickListener;
     }
 
-    public void addAll(List<PhotoModel> items) {
-        this.items.addAll(items);
-        notifyDataSetChanged();
+    public void addAll(List<PhotoModel> newItems) {
+        if (newItems == null) {
+            items.add(null);
+            notifyItemInserted(getItemCount() - 1);
+        } else {
+            items.addAll(newItems);
+            notifyDataSetChanged();
+        }
     }
 
     public List<PhotoModel> getAll() {
         return items;
+    }
+
+    public void remove(int index) {
+        items.remove(index);
+        notifyItemRemoved(index);
     }
 
 }

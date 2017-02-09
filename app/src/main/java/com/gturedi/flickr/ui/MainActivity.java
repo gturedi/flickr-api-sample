@@ -3,7 +3,6 @@ package com.gturedi.flickr.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.PhotoAdapter;
@@ -12,7 +11,6 @@ import com.gturedi.flickr.model.event.SearchEvent;
 import com.gturedi.flickr.service.FlickrService;
 import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.util.RowClickListener;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,7 +27,6 @@ public class MainActivity
     private int page = 1;
 
     @BindView(R.id.recycler) protected RecyclerView recycler;
-    @BindView(R.id.progress) protected ProgressWheel progress;
 
     @Override
     public int getLayout() {
@@ -55,9 +52,10 @@ public class MainActivity
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
         //dismissLoadingDialog();
-        progress.setVisibility(View.VISIBLE);
         isLoading = false;
         if (event.exception == null) {
+            //remove progress item
+            adapter.remove(adapter.getItemCount()-1);
             adapter.addAll(event.item);
         } else {
             showGeneralError();
@@ -68,7 +66,8 @@ public class MainActivity
         Timber.i("sendRequest: "+page);
         if (AppUtil.isConnected()) {
             //showLoadingDialog();
-            progress.setVisibility(View.VISIBLE);
+            // add null , so the adapter will check view_type and show progress bar at bottom
+            adapter.addAll(null);
             isLoading = true;
             flickrService.searchAsync(page++);
         } else {

@@ -3,14 +3,16 @@ package com.gturedi.flickr.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import com.gturedi.flickr.model.PhotoModel;
-import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.PhotoAdapter;
+import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.model.event.SearchEvent;
 import com.gturedi.flickr.service.FlickrService;
+import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.util.RowClickListener;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -26,8 +28,8 @@ public class MainActivity
     private boolean isLoading;
     private int page = 1;
 
-    @BindView(R.id.rvItems)
-    protected RecyclerView rvItems;
+    @BindView(R.id.recycler) protected RecyclerView recycler;
+    @BindView(R.id.progress) protected ProgressWheel progress;
 
     @Override
     public int getLayout() {
@@ -39,8 +41,8 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         adapter = new PhotoAdapter();
         adapter.setRowClickListener(this);
-        rvItems.setAdapter(adapter);
-        rvItems.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
         setScrollListener();
         sendRequest();
     }
@@ -52,7 +54,8 @@ public class MainActivity
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
-        dismissLoadingDialog();
+        //dismissLoadingDialog();
+        progress.setVisibility(View.VISIBLE);
         isLoading = false;
         if (event.exception == null) {
             adapter.addAll(event.item);
@@ -64,7 +67,8 @@ public class MainActivity
     private void sendRequest() {
         Timber.i("sendRequest: "+page);
         if (AppUtil.isConnected()) {
-            showLoadingDialog();
+            //showLoadingDialog();
+            progress.setVisibility(View.VISIBLE);
             isLoading = true;
             flickrService.searchAsync(page++);
         } else {
@@ -73,7 +77,7 @@ public class MainActivity
     }
 
     private void setScrollListener() {
-        rvItems.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);

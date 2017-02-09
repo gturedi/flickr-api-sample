@@ -1,12 +1,14 @@
 package com.gturedi.flickr.ui;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.gturedi.flickr.R;
+import com.gturedi.flickr.util.AppUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -64,24 +66,16 @@ public abstract class BaseActivity
     }
 
     protected void showGeneralError() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.errorTitle)
-                .setMessage(R.string.errorMessage)
-                .setNegativeButton(R.string.close, null)
-                .show();
+        AppUtil.createSnackbar(this, R.string.errorMessage).show();
     }
 
     protected void showConnectionError() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.errorTitle)
-                .setMessage(R.string.connectionErrorMessage)
-                .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .show();
+        AppUtil.createSnackbar(this, R.string.connectionErrorMessage).setAction(R.string.settings, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        }).show();
     }
 
 }

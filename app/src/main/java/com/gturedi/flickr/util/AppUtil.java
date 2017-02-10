@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.gturedi.flickr.App;
+import com.gturedi.flickr.R;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -27,6 +28,7 @@ public class AppUtil {
     public static void bindImage(String url, ImageView target, boolean centerCrop) {
         DrawableRequestBuilder<String> builder = Glide.with(App.getContext())
                 .load(url)
+                .error(R.drawable.ic_broken_image_24dp)
                 //.placeholder(R.color.gray2)
                 .crossFade();
         if (centerCrop) builder.centerCrop();

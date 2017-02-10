@@ -83,8 +83,14 @@ public class PhotoAdapter
     }
 
     public void remove(int index) {
+        if (index == -1) return;
         items.remove(index);
         notifyItemRemoved(index);
+    }
+
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
     }
 
 }

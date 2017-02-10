@@ -1,6 +1,8 @@
 package com.gturedi.flickr.ui;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -19,13 +21,16 @@ import butterknife.BindView;
 import timber.log.Timber;
 
 public class MainActivity
-        extends BaseActivity implements RowClickListener<PhotoModel> {
+        extends BaseActivity
+        implements RowClickListener<PhotoModel>,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private FlickrService flickrService = FlickrService.INSTANCE;
     private PhotoAdapter adapter;
     private boolean isLoading;
     private int page = 1;
 
+    @BindView(R.id.swipe) protected SwipeRefreshLayout swipe;
     @BindView(R.id.recycler) protected RecyclerView recycler;
 
     @Override
@@ -36,11 +41,16 @@ public class MainActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        swipe.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
+        swipe.setOnRefreshListener(this);
+
         adapter = new PhotoAdapter();
         adapter.setRowClickListener(this);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         setScrollListener();
+
         sendRequest();
     }
 
@@ -49,10 +59,21 @@ public class MainActivity
         startActivity(DetailActivity.createIntent(this, row, adapter.getAll()));
     }
 
+    @Override
+    public void onRefresh() {
+        page = 1;
+        sendRequest();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
         //dismissLoadingDialog();
         isLoading = false;
+        if (swipe.isRefreshing()) {
+            swipe.setRefreshing(false);
+            adapter.clear();
+        }
+
         if (event.exception == null) {
             //remove progress item
             adapter.remove(adapter.getItemCount()-1);

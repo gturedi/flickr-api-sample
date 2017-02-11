@@ -50,6 +50,8 @@ public class DetailActivity
     @BindView(R.id.tvViewCount) protected TextView tvViewCount;
     @BindView(R.id.lnrFooter) protected View lnrFooter;
     @BindView(R.id.ivClose) protected View ivClose;
+    @BindView(R.id.ivInfo) protected View ivInfo;
+    @BindView(R.id.ivShare) protected View ivShare;
 
     public static Intent createIntent(Context context, int index, List<PhotoModel> items) {
         return new Intent(context, DetailActivity.class)
@@ -77,6 +79,10 @@ public class DetailActivity
             pager.setCurrentItem(index);
             onPageSelected(index);
         }
+
+        AppUtil.setVectorBg(ivClose, R.drawable.ic_close_24dp, android.R.color.white, R.color.gray2);
+        AppUtil.setVectorBg(ivInfo, R.drawable.ic_info_outline_24dp, android.R.color.white, R.color.gray2);
+        AppUtil.setVectorBg(ivShare, R.drawable.ic_share_24dp, android.R.color.white, R.color.gray2);
     }
 
     @OnClick(R.id.ivClose)
@@ -97,10 +103,9 @@ public class DetailActivity
     @OnClick(R.id.ivShare)
     public void onShareClick(View v) {
         if (detailEvent.exception != null) return;
-        startActivity(new Intent(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_SUBJECT, detailEvent.item.title)
-                .putExtra(Intent.EXTRA_TEXT, items.get(pager.getCurrentItem()).getImageUrl(ImageSize.LARGE))
-        );
+        String subject = detailEvent.item.title._content;
+        String text = items.get(pager.getCurrentItem()).getImageUrl(ImageSize.LARGE);
+        startActivity(AppUtil.createShareIntent(subject, text));
     }
 
     // not work http://stackoverflow.com/questions/10243690/onclick-on-viewpager-not-triggered

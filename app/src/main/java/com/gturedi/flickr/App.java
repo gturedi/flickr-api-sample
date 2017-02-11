@@ -2,6 +2,7 @@ package com.gturedi.flickr;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
 import timber.log.Timber;
 
@@ -12,6 +13,11 @@ public class App
         extends Application {
 
     private static Context instance;
+
+    static {
+        //AppCompatDelegate.setCompatVectorFromSourcesEnabled(true);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     /**
      * app level shared context without memory leak problem

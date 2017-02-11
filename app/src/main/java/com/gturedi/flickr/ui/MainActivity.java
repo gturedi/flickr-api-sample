@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.gturedi.flickr.R;
@@ -35,10 +36,16 @@ public class MainActivity
     private boolean isLoading;
     private int page = 1;
 
-    @BindView(R.id.drawer) protected DrawerLayout drawer;
-    @BindView(R.id.navigation) protected NavigationView navigation;
-    @BindView(R.id.swipe) protected SwipeRefreshLayout swipe;
-    @BindView(R.id.recycler) protected RecyclerView recycler;
+    @BindView(R.id.drawer)
+    protected DrawerLayout drawer;
+    @BindView(R.id.navigation)
+    protected NavigationView navigation;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
+    @BindView(R.id.swipe)
+    protected SwipeRefreshLayout swipe;
+    @BindView(R.id.recycler)
+    protected RecyclerView recycler;
 
     @Override
     public int getLayout() {
@@ -49,13 +56,12 @@ public class MainActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navigation.setNavigationItemSelectedListener(this);
-        swipe.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
+        swipe.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));
         swipe.setOnRefreshListener(this);
 
         adapter = new PhotoAdapter();
@@ -105,7 +111,7 @@ public class MainActivity
 
         if (event.exception == null) {
             //remove progress item
-            adapter.remove(adapter.getItemCount()-1);
+            adapter.remove(adapter.getItemCount() - 1);
             adapter.addAll(event.item);
         } else {
             showGeneralError();
@@ -113,7 +119,7 @@ public class MainActivity
     }
 
     private void sendRequest() {
-        Timber.i("sendRequest: "+page);
+        Timber.i("sendRequest: " + page);
         if (AppUtil.isConnected()) {
             //showLoadingDialog();
             // add null , so the adapter will check view_type and show progress bar at bottom

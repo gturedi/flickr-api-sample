@@ -1,10 +1,15 @@
 package com.gturedi.flickr.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.PhotoAdapter;
@@ -23,13 +28,15 @@ import timber.log.Timber;
 public class MainActivity
         extends BaseActivity
         implements RowClickListener<PhotoModel>,
-        SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
 
     private FlickrService flickrService = FlickrService.INSTANCE;
     private PhotoAdapter adapter;
     private boolean isLoading;
     private int page = 1;
 
+    @BindView(R.id.drawer) protected DrawerLayout drawer;
+    @BindView(R.id.navigation) protected NavigationView navigation;
     @BindView(R.id.swipe) protected SwipeRefreshLayout swipe;
     @BindView(R.id.recycler) protected RecyclerView recycler;
 
@@ -42,6 +49,12 @@ public class MainActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        navigation.setNavigationItemSelectedListener(this);
         swipe.setColorSchemeColors(ContextCompat.getColor(this,R.color.colorAccent));
         swipe.setOnRefreshListener(this);
 
@@ -51,7 +64,18 @@ public class MainActivity
         recycler.setLayoutManager(new LinearLayoutManager(this));
         setScrollListener();
 
+
         sendRequest();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -63,6 +87,11 @@ public class MainActivity
     public void onRefresh() {
         page = 1;
         sendRequest();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

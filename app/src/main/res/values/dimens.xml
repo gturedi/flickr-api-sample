@@ -4,4 +4,5 @@
     <dimen name="marginMedium">10dp</dimen>
     <dimen name="controlSizeSmall">25dp</dimen>
     <dimen name="controlSizeMedium">35dp</dimen>
+    <dimen name="statusBarHeight">25dp</dimen>
 </resources>

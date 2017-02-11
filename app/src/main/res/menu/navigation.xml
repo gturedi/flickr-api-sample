@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_home"
+            android:checked="true"
+            android:icon="@drawable/ic_share_24dp"
+            android:title="@string/settings"/>
+        <item
+            android:id="@+id/drawer_favourite"
+            android:icon="@drawable/ic_info_outline_24dp"
+            android:title="@string/close"/>
+    </group>
+</menu>

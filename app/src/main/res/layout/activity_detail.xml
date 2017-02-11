@@ -10,6 +10,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/keyLine1"
         />
 
     <TextView
@@ -26,8 +27,8 @@
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/controlSizeMedium"
+        android:layout_height="@dimen/controlSizeMedium"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/keyLine1"
         tools:src="@drawable/ic_close_24dp"
@@ -81,16 +82,16 @@
 
             <ImageView
                 android:id="@+id/ivInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/controlSizeSmall"
+                android:layout_height="@dimen/controlSizeSmall"
                 android:layout_margin="@dimen/keyLine1"
                 tools:src="@drawable/ic_info_outline_24dp"
                 />
 
             <ImageView
                 android:id="@+id/ivShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/controlSizeSmall"
+                android:layout_height="@dimen/controlSizeSmall"
                 android:layout_toRightOf="@+id/ivInfo"
                 android:layout_alignBottom="@+id/ivInfo"
                 tools:src="@drawable/ic_share_24dp"

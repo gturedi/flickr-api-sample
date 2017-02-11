@@ -18,6 +18,7 @@ import com.gturedi.flickr.model.PhotoModel;
 import com.gturedi.flickr.model.event.DetailEvent;
 import com.gturedi.flickr.service.FlickrService;
 import com.gturedi.flickr.util.AppUtil;
+import com.gturedi.flickr.util.ParallaxPageTransformer;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -67,6 +68,7 @@ public class DetailActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         index = getIntent().getIntExtra(EXTRA_INDEX, -1);
         items = (List<PhotoModel>) getIntent().getSerializableExtra(EXTRA_ITEMS);
         if (index == -1) {
@@ -75,6 +77,7 @@ public class DetailActivity
             showConnectionError();
         } else {
             setPagerClickListener();
+            pager.setPageTransformer(false, new ParallaxPageTransformer(R.id.image));
             pager.setAdapter(new DetailPagerAdapter(getSupportFragmentManager(), items));
             pager.setCurrentItem(index);
             onPageSelected(index);

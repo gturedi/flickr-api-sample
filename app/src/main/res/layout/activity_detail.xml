@@ -48,7 +48,7 @@
             android:layout_toLeftOf="@+id/tvDate"
             android:textColor="@android:color/white"
             android:maxLines="2"
-            tools:text="winter is coming.."
+            tools:text="winter is coming..\nfdfdf"
             android:layout_marginLeft="@dimen/keyLine1"
             android:layout_marginTop="@dimen/keyLine1"
             android:layout_marginBottom="@dimen/keyLine1"
@@ -59,7 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/keyLine1"
+            android:layout_alignBottom="@id/tvTitle"
+            android:layout_marginRight="@dimen/keyLine1"
             android:textColor="@android:color/white"
             tools:text="24.12.2016"
             />

@@ -2,7 +2,6 @@
     <group android:id="@+id/group1">
         <item
             android:id="@+id/mnFeedback"
-            android:checked="true"
             android:icon="@drawable/ic_feedback_black_24dp"
             android:title="@string/feedback"
             />

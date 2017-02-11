@@ -1,7 +1,6 @@
 package com.gturedi.flickr.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -98,8 +97,8 @@ public class MainActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        drawer.openDrawer(GravityCompat.START);
+    public boolean onNavigationItemSelected(MenuItem item) {
+        drawer.closeDrawer(GravityCompat.START);
         if (item.getItemId() == R.id.mnFeedback) {
             startActivity(AppUtil.createMailIntent(AppUtil.FEEDBACK_MAIL, getString(R.string.feedbackSubject)));
         } else if (item.getItemId() == R.id.mnAbout) {

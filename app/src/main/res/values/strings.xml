@@ -9,4 +9,8 @@
     <string name="description">Description</string>
     <string name="settings">Settings</string>
     <string name="chooserTitle">Choose App</string>
+    <string name="feedback">Feedback</string>
+    <string name="feedbackSubject">Flickr App Feedback</string>
+    <string name="about">About</string>
+    <string name="aboutText">This app had developed to show simple usage of Flick API by @gturedii. Source: https://github.com/gokhan-turedi/flickr-api-sample</string>
 </resources>

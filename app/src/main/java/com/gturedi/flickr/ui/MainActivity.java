@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.gturedi.flickr.BuildConfig;
 import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.PhotoAdapter;
 import com.gturedi.flickr.model.PhotoModel;
@@ -70,6 +71,7 @@ public class MainActivity
         recycler.setLayoutManager(new LinearLayoutManager(this));
         setScrollListener();
 
+        navigation.getMenu().findItem(R.id.mnVersion).setTitle(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
 
         sendRequest();
     }
@@ -97,6 +99,14 @@ public class MainActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        drawer.openDrawer(GravityCompat.START);
+        if (item.getItemId() == R.id.mnFeedback) {
+            startActivity(AppUtil.createMailIntent(AppUtil.FEEDBACK_MAIL, getString(R.string.feedbackSubject)));
+        } else if (item.getItemId() == R.id.mnAbout) {
+            String title = getString(R.string.about);
+            String message = getString(R.string.aboutText);
+            showInfoDialog(title, message);
+        }
         return false;
     }
 

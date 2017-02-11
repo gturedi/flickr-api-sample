@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -63,6 +64,15 @@ public abstract class BaseActivity
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+    }
+
+    protected void showInfoDialog(String title, String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setIcon(R.drawable.ic_info_outline_24dp)
+                .setMessage(message)
+                .setNegativeButton(R.string.close, null)
+                .show();
     }
 
     protected void showGeneralError() {

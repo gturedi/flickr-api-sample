@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -96,11 +95,7 @@ public class DetailActivity
     @OnClick(R.id.ivInfo)
     public void onInfoClick(View v) {
         if (detailEvent.exception != null) return;
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.description)
-                .setMessage(detailEvent.item.description.toString())
-                .setNegativeButton(R.string.close, null)
-                .show();
+        showInfoDialog(getString(R.string.description), detailEvent.item.description.toString());
     }
 
     @OnClick(R.id.ivShare)

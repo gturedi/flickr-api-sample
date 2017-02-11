@@ -1,14 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:checkableBehavior="single">
+    <group android:id="@+id/group1">
         <item
-            android:id="@+id/drawer_home"
+            android:id="@+id/mnFeedback"
             android:checked="true"
-            android:icon="@drawable/ic_share_24dp"
-            android:title="@string/settings"/>
+            android:icon="@drawable/ic_feedback_black_24dp"
+            android:title="@string/feedback"
+            />
         <item
-            android:id="@+id/drawer_favourite"
-            android:icon="@drawable/ic_info_outline_24dp"
-            android:title="@string/close"/>
+            android:id="@+id/mnAbout"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/about"
+            />
+    </group>
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/mnVersion"
+            android:title="1.2.1"
+            android:enabled="false"
+            />
     </group>
 </menu>

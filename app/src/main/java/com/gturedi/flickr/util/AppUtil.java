@@ -25,7 +25,9 @@ import com.gturedi.flickr.R;
  */
 public class AppUtil {
 
+    public static final String FEEDBACK_MAIL = "turedi.gokhan@gmail.com";
     public static final String MIME_TYPE_SHARE = "text/plain";
+    private static final String MIME_TYPE_MAIL = "plain/text";
 
     public static boolean isConnected() {
         ConnectivityManager connectivitymanager = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -74,6 +76,14 @@ public class AppUtil {
                 .setType(MIME_TYPE_SHARE)
                 .putExtra(Intent.EXTRA_SUBJECT, subject)
                 .putExtra(Intent.EXTRA_TEXT, text);
+        return Intent.createChooser(intent, App.getContext().getString(R.string.chooserTitle));
+    }
+
+    public static Intent createMailIntent(String mail, String subject) {
+        Intent intent = new Intent(Intent.ACTION_SEND)
+                .setType(MIME_TYPE_MAIL)
+                .putExtra(Intent.EXTRA_EMAIL, new String[]{mail})
+                .putExtra(Intent.EXTRA_SUBJECT, subject);
         return Intent.createChooser(intent, App.getContext().getString(R.string.chooserTitle));
     }
 

@@ -1,9 +1,9 @@
 apply plugin: "com.android.application"
 apply plugin: "com.jakewharton.butterknife"
 
-def supportVersion = "25.1.1"
-def okhttpVersion = "3.6.0"
-def butterknifeVersion = "8.5.1"
+def SUPPORT_VERSION = "25.1.1"
+def OKHTTP_VERSION = "3.6.0"
+def BUTTERKNIFE_VERSION = "8.5.1"
 
 android {
     compileSdkVersion 25
@@ -13,7 +13,7 @@ android {
         applicationId "com.gturedi.flickr"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode getVersionCode()
+        versionCode readVersionCode()
         versionName "1.0.$versionCode"
         vectorDrawables.useSupportLibrary = true
     }
@@ -21,13 +21,13 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:recyclerview-v7:$supportVersion"
-    compile "com.android.support:design:$supportVersion"
-    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-    compile "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
+    compile "com.android.support:design:$SUPPORT_VERSION"
+    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
+    compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
     compile "com.google.code.gson:gson:2.6.1"
     compile "com.jakewharton.timber:timber:4.5.1"
     compile "org.greenrobot:eventbus:3.0.0"
@@ -37,11 +37,11 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
 }
 
-def getVersionCode() {
+def readVersionCode() {
     def versionPropsFile = file('version.properties')
     def Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
-    return versionProps['VERSION_CODE'].toInteger()
+    return versionProps["VERSION_CODE"].toInteger()
 }
 
 task increaseVersionCodeTask << {
@@ -49,8 +49,8 @@ task increaseVersionCodeTask << {
     def versionPropsFile = file('version.properties')
     def Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
-    def code = versionProps['VERSION_CODE'].toInteger() + 1
-    versionProps['VERSION_CODE'] = code.toString()
+    def code = versionProps["VERSION_CODE"].toInteger() + 1
+    versionProps["VERSION_CODE"] = code.toString()
     versionProps.store(versionPropsFile.newWriter(), null)
 }
 

@@ -27,6 +27,9 @@ import timber.log.Timber;
 
 /**
  * Created by gturedi on 7.02.2017.
+ *
+ * used greenRobot's eventBus for asynchronous operations because it is android optimized for android so take care of activity/fragment lifecycle.
+ * when activity destroyed it does not receive events thus prevents npe.
  */
 public class FlickrService {
 

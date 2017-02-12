@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment
         extends Fragment {
 
-    public abstract int getLayout();
+    protected abstract int getLayout();
 
     @Override
     public void onStart() {

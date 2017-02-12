@@ -34,11 +34,10 @@ import timber.log.Timber;
 public class DetailActivity
         extends BaseActivity {
 
-    public static final String EXTRA_INDEX = "EXTRA_INDEX";
-    public static final String EXTRA_ITEMS = "EXTRA_ITEMS";
-    private int index;
+    private static final String EXTRA_INDEX = "EXTRA_INDEX";
+    private static final String EXTRA_ITEMS = "EXTRA_ITEMS";
     private List<PhotoModel> items;
-    private FlickrService flickrService = FlickrService.INSTANCE;
+    private final FlickrService flickrService = FlickrService.INSTANCE;
     private DetailEvent detailEvent;
 
     @BindView(R.id.pager) protected ViewPager pager;
@@ -66,7 +65,7 @@ public class DetailActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        index = getIntent().getIntExtra(EXTRA_INDEX, -1);
+        int index = getIntent().getIntExtra(EXTRA_INDEX, -1);
         items = (List<PhotoModel>) getIntent().getSerializableExtra(EXTRA_ITEMS);
         if (index == -1) {
             finish();
@@ -91,20 +90,20 @@ public class DetailActivity
 
     @OnClick(R.id.ivInfo)
     public void onInfoClick(View v) {
-        if (detailEvent.exception != null) return;
+        if (detailEvent != null) return;
         showInfoDialog(getString(R.string.description), detailEvent.item.description.toString());
     }
 
     @OnClick(R.id.ivShare)
     public void onShareClick(View v) {
-        if (detailEvent.exception != null) return;
+        if (detailEvent != null) return;
         String subject = detailEvent.item.title._content;
         String text = items.get(pager.getCurrentItem()).getImageUrl(ImageSize.LARGE);
         startActivity(AppUtil.createShareIntent(subject, text));
     }
 
     @OnPageChange(R.id.pager)
-    void onPageSelected(int position) {
+    protected void onPageSelected(int position) {
         //showLoadingDialog();
         tvOwner.setText(R.string.loading);
         tvTitle.setText(R.string.loading);
@@ -114,7 +113,7 @@ public class DetailActivity
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onServiceEvent(DetailEvent event) {
+    protected void onServiceEvent(DetailEvent event) {
         //dismissLoadingDialog();
         detailEvent = event;
         if (event.exception == null) {

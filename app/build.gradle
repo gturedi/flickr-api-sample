@@ -28,7 +28,7 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
-    compile "com.google.code.gson:gson:2.6.1"
+    compile "com.google.code.gson:gson:2.7"
     compile "com.jakewharton.timber:timber:4.5.1"
     compile "org.greenrobot:eventbus:3.0.0"
     compile "com.github.bumptech.glide:glide:3.7.0"

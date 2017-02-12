@@ -26,7 +26,7 @@ import com.gturedi.flickr.R;
 public class AppUtil {
 
     public static final String FEEDBACK_MAIL = "turedi.gokhan@gmail.com";
-    public static final String MIME_TYPE_SHARE = "text/plain";
+    private static final String MIME_TYPE_SHARE = "text/plain";
     private static final String MIME_TYPE_MAIL = "plain/text";
 
     public static boolean isConnected() {

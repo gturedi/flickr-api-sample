@@ -30,7 +30,7 @@ public abstract class BaseActivity
         EventBus.getDefault().register(this);
     }
 
-    public abstract int getLayout();
+    protected abstract int getLayout();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

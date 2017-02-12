@@ -36,16 +36,11 @@ public class MainActivity
     private boolean isLoading;
     private int page = 1;
 
-    @BindView(R.id.drawer)
-    protected DrawerLayout drawer;
-    @BindView(R.id.navigation)
-    protected NavigationView navigation;
-    @BindView(R.id.toolbar)
-    protected Toolbar toolbar;
-    @BindView(R.id.swipe)
-    protected SwipeRefreshLayout swipe;
-    @BindView(R.id.recycler)
-    protected RecyclerView recycler;
+    @BindView(R.id.drawer) protected DrawerLayout drawer;
+    @BindView(R.id.navigation) protected NavigationView navigation;
+    @BindView(R.id.toolbar) protected Toolbar toolbar;
+    @BindView(R.id.swipe) protected SwipeRefreshLayout swipe;
+    @BindView(R.id.recycler) protected RecyclerView recycler;
 
     @Override
     public int getLayout() {
@@ -56,9 +51,11 @@ public class MainActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         navigation.setNavigationItemSelectedListener(this);
         swipe.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));

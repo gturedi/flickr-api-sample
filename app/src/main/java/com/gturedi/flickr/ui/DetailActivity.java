@@ -3,10 +3,7 @@ package com.gturedi.flickr.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +11,7 @@ import com.gturedi.flickr.R;
 import com.gturedi.flickr.adapter.DetailPagerAdapter;
 import com.gturedi.flickr.model.ImageSize;
 import com.gturedi.flickr.model.PhotoModel;
+import com.gturedi.flickr.model.event.ClickEvent;
 import com.gturedi.flickr.model.event.DetailEvent;
 import com.gturedi.flickr.service.FlickrService;
 import com.gturedi.flickr.util.AppUtil;
@@ -75,7 +73,6 @@ public class DetailActivity
         } else if (!AppUtil.isConnected()) {
             showConnectionError();
         } else {
-            setPagerClickListener();
             pager.setPageTransformer(false, new ParallaxPageTransformer(R.id.image));
             pager.setAdapter(new DetailPagerAdapter(getSupportFragmentManager(), items));
             pager.setCurrentItem(index);
@@ -106,12 +103,6 @@ public class DetailActivity
         startActivity(AppUtil.createShareIntent(subject, text));
     }
 
-    // not work http://stackoverflow.com/questions/10243690/onclick-on-viewpager-not-triggered
-    @OnClick(R.id.pager)
-    public void onPagerClick(View v) {
-        Timber.i("onPagerClick");
-    }
-
     @OnPageChange(R.id.pager)
     void onPageSelected(int position) {
         //showLoadingDialog();
@@ -123,7 +114,7 @@ public class DetailActivity
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(DetailEvent event) {
+    public void onServiceEvent(DetailEvent event) {
         //dismissLoadingDialog();
         detailEvent = event;
         if (event.exception == null) {
@@ -140,26 +131,15 @@ public class DetailActivity
         }
     }
 
-    // http://stackoverflow.com/questions/10243690/onclick-on-viewpager-not-triggered
-    private void setPagerClickListener() {
-        final GestureDetectorCompat tapGestureDetector = new GestureDetectorCompat(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent e) {
-                int value = lnrFooter.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-                Timber.i("pagerClick: "+value);
-                lnrFooter.setVisibility(value);
-                ivClose.setVisibility(value);
-                tvOwner.setVisibility(value);
-                return true;
-            }
-        });
-        pager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                tapGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
+    // fired by child fragment
+    // child's photoView absorbs touch event so parent's touch events not fired
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onClickEvent(ClickEvent event) {
+        int value = lnrFooter.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+        Timber.i("pagerClick: "+value);
+        lnrFooter.setVisibility(value);
+        ivClose.setVisibility(value);
+        tvOwner.setVisibility(value);
     }
 
 }

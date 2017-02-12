@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="Theme.DesignDemo" parent="appTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>

@@ -3,6 +3,7 @@ package com.gturedi.flickr.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.gturedi.flickr.App;
 import com.gturedi.flickr.model.event.DetailEvent;
 import com.gturedi.flickr.model.PhotoInfoModel;
 import com.gturedi.flickr.model.PhotoModel;
@@ -27,7 +28,7 @@ import timber.log.Timber;
 
 /**
  * Created by gturedi on 7.02.2017.
- *
+ * <p>
  * used greenRobot's eventBus for asynchronous operations because it is android optimized for android so take care of activity/fragment lifecycle.
  * when activity destroyed it does not receive events thus prevents npe.
  */
@@ -38,9 +39,9 @@ public class FlickrService {
     private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String API_KEY = "04a42d236e746206fbbf64245342dd2d";
     private static final String URL_BASE = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=" + API_KEY;
-    private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page="+PAGE_SIZE+"&page=";
+    private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page=" + PAGE_SIZE + "&page=";
     private static final String URL_DETAIL = "&method=flickr.photos.getInfo&photo_id=";
-    private static final String CACHE_PATH = "/data/data/" + com.gturedi.flickr.BuildConfig.APPLICATION_ID + "/cache/";
+    private static final String CACHE_PATH = App.getContext().getCacheDir().getAbsolutePath();
     private static final String COLUMN_PHOTO = "photo";
     private static final String COLUMN_PHOTOS = "photos";
 
@@ -55,7 +56,7 @@ public class FlickrService {
                 try {
                     List<PhotoModel> items = search(page);
                     EventBus.getDefault().post(new SearchEvent(items, null));
-                } catch (IOException|JSONException e) {
+                } catch (IOException | JSONException e) {
                     Timber.e(e);
                     EventBus.getDefault().post(new SearchEvent(null, e));
                 }
@@ -70,7 +71,7 @@ public class FlickrService {
                 try {
                     PhotoInfoModel items = getDetail(id);
                     EventBus.getDefault().post(new DetailEvent(items, null));
-                } catch (IOException|JSONException e) {
+                } catch (IOException | JSONException e) {
                     Timber.e(e);
                     EventBus.getDefault().post(new DetailEvent(null, e));
                 }
@@ -98,7 +99,8 @@ public class FlickrService {
         String json = response.body().string();
         JSONArray jsonArray = new JSONObject(json).getJSONObject(COLUMN_PHOTOS).getJSONArray(COLUMN_PHOTO);
 
-        Type listType = new TypeToken<List<PhotoModel>>(){}.getType();
+        Type listType = new TypeToken<List<PhotoModel>>() {
+        }.getType();
         return getGson().fromJson(jsonArray.toString(), listType);
     }
 

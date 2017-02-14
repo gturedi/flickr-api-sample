@@ -11,7 +11,7 @@ public class PhotoInfoModel
 
     public long id;
     public long dateuploaded;
-    public long views;
+    public int views;
     public ContentModel title;
     public ContentModel description;
     public OwnerModel owner;
@@ -19,7 +19,7 @@ public class PhotoInfoModel
 
     public String getFormattedDate() {
         // service short timeStamp veriyor o yuzden bin ile carpiyoruz
-        return SimpleDateFormat.getDateInstance().format(new Date(dateuploaded* 1000));
+        return SimpleDateFormat.getDateInstance().format(new Date(dateuploaded * 1000));
     }
 
 }

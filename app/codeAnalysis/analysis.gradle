@@ -1,0 +1,58 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+
+def configDir = "${project.rootDir}/app/codeAnalysis"
+def reportDir = "${project.buildDir}/reports"
+def ignoreErrors = true
+
+android {
+    lintOptions {
+        abortOnError !ignoreErrors
+        xmlReport true
+        htmlReport true
+        absolutePaths false
+        lintConfig file("$configDir/lint.xml")
+        htmlOutput file("$reportDir/lint/lintt.html")
+        xmlOutput file("$reportDir/lint/lintt.xml")
+    }
+}
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures ignoreErrors
+    showViolations true
+    configFile file("${configDir}/checkstyle.xml")
+    source 'src/main/java'
+    include '**/*.java'
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = ignoreErrors
+    effort = "max"
+    reportLevel = "high"
+    //excludeFilter = new File("${project.rootDir}/config/quality/findbugs/findbugs-filter.xml")
+    classes = files("${project.rootDir}/app/build/intermediates/classes")
+
+    source 'src'
+    include '**/*.java'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+        }
+        html {
+            destination "$project.buildDir/reports/findbugs/findbugs.html"
+        }
+    }
+
+    classpath = files()
+}
+
+// http://vincentbrison.com/2014/07/19/how-to-improve-quality-and-syntax-of-your-android-code
+afterEvaluate {
+    if (project.tasks.findByName('check')) {
+        check.dependsOn 'lint', 'checkstyle', 'findbugs'
+    }
+}

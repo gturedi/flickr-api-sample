@@ -90,13 +90,13 @@ public class DetailActivity
 
     @OnClick(R.id.ivInfo)
     public void onInfoClick(View v) {
-        if (detailEvent != null) return;
+        if (detailEvent == null || detailEvent.item == null) return;
         showInfoDialog(getString(R.string.description), detailEvent.item.description.toString());
     }
 
     @OnClick(R.id.ivShare)
     public void onShareClick(View v) {
-        if (detailEvent != null) return;
+        if (detailEvent == null || detailEvent.item == null) return;
         String subject = detailEvent.item.title._content;
         String text = items.get(pager.getCurrentItem()).getImageUrl(ImageSize.LARGE);
         startActivity(AppUtil.createShareIntent(subject, text));
@@ -120,7 +120,7 @@ public class DetailActivity
             tvOwner.setText(event.item.owner.toString());
             tvTitle.setText(event.item.title.toString());
             tvDate.setText(event.item.getFormattedDate());
-            tvViewCount.setText(getString(R.string.views, event.item.views));
+            tvViewCount.setText(getResources().getQuantityText(R.plurals.views, event.item.views));
         } else {
             tvOwner.setText("-");
             tvTitle.setText("-");
@@ -135,7 +135,7 @@ public class DetailActivity
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClickEvent(ClickEvent event) {
         int value = lnrFooter.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-        Timber.i("pagerClick: "+value);
+        Timber.i("pagerClick: " + value);
         lnrFooter.setVisibility(value);
         ivClose.setVisibility(value);
         tvOwner.setVisibility(value);

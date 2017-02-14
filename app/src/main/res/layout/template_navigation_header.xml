@@ -1,5 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="172dp"
@@ -24,6 +25,7 @@
         android:layout_marginBottom="@dimen/smallMedium"
         android:text="gturedi"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        tools:ignore="HardcodedText"
         />
 
     <TextView
@@ -35,6 +37,7 @@
         android:layout_marginLeft="@dimen/marginMedium"
         android:text="turedi.gokhan@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:ignore="HardcodedText"
         />
 
 </RelativeLayout>

@@ -29,8 +29,12 @@ public class AppUtil {
     private static final String MIME_TYPE_SHARE = "text/plain";
     private static final String MIME_TYPE_MAIL = "plain/text";
 
+    private AppUtil() {
+
+    }
     public static boolean isConnected() {
-        ConnectivityManager connectivitymanager = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivitymanager = (ConnectivityManager) App.getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivitymanager.getActiveNetworkInfo() != null
                 && connectivitymanager.getActiveNetworkInfo().isAvailable()
                 && connectivitymanager.getActiveNetworkInfo().isConnected();
@@ -53,10 +57,14 @@ public class AppUtil {
 
     // http://stackoverflow.com/questions/26788251/android-tint-using-drawablecompat
     // http://www.donnfelker.com/quick-and-easy-statelistdrawables-in-android-with-one-png/
-    public static void setVectorBg(View target, @DrawableRes int drRes, @ColorRes int normalRes, @ColorRes int pressedRes) {
+    public static void setVectorBg(View target, @DrawableRes int drRes, @ColorRes int normalRes,
+                                   @ColorRes int pressedRes) {
         int[][] states = new int[][] {
-                new int[] { android.R.attr.state_pressed},
-                new int[] { }
+                new int[] {
+                        android.R.attr.state_pressed},
+                new int[] {
+
+                }
         };
         int[] colors = new int[] {
                 ContextCompat.getColor(target.getContext(), pressedRes),
@@ -64,7 +72,8 @@ public class AppUtil {
         };
         ColorStateList cl = new ColorStateList(states, colors);
 
-        // if you pass application as context is throw exception: Resources$NotFoundException: File res/drawable/ic_close_24dp.xml from drawable resource ID #0x7f02005c
+        // if you pass application as context is throw exception: Resources$NotFoundException:
+        // File res/drawable/ic_close_24dp.xml from drawable resource ID #0x7f02005c
         Drawable drawable = ContextCompat.getDrawable(target.getContext(), drRes);
         Drawable wrapped = DrawableCompat.wrap(drawable);
         DrawableCompat.setTintList(wrapped, cl);

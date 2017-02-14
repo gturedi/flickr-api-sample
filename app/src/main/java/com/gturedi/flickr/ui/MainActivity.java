@@ -78,8 +78,9 @@ public class MainActivity
             case android.R.id.home:
                 drawer.openDrawer(GravityCompat.START);
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

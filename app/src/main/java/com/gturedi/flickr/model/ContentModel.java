@@ -6,6 +6,7 @@ package com.gturedi.flickr.model;
 public class ContentModel
         extends BaseModel {
 
+    @SuppressWarnings("membername")
     public String _content;
 
     @Override

@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Created by gturedi on 8.02.2017.
  */
-class PhotoViewHolder
+public class PhotoViewHolder
         extends RecyclerView.ViewHolder {
 
     @BindView(R.id.image)

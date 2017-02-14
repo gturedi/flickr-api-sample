@@ -5,7 +5,10 @@
     <string name="close">Close</string>
     <string name="loading">Loading..</string>
     <string name="connectionErrorMessage">Please chek your device connection</string>
-    <string name="views">%1$d Views</string>
+    <plurals name="views">
+        <item quantity="one">%d View</item>
+        <item quantity="other">%d Views</item>
+    </plurals>
     <string name="description">Description</string>
     <string name="settings">Settings</string>
     <string name="chooserTitle">Choose App</string>

@@ -20,8 +20,8 @@ import java.util.List;
 public class PhotoAdapter
         extends RecyclerView.Adapter {
 
-    private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_PROG = 0;
 
     private final List<PhotoModel> items = new ArrayList<>();
     private RowClickListener<PhotoModel> rowClickListener;
@@ -43,7 +43,7 @@ public class PhotoAdapter
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PhotoViewHolder) {
             PhotoViewHolder vh = (PhotoViewHolder) holder;
             PhotoModel item = items.get(position);
@@ -52,7 +52,7 @@ public class PhotoAdapter
                 vh.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        rowClickListener.onRowClicked(position, items.get(position));
+                        rowClickListener.onRowClicked(holder.getAdapterPosition(), items.get(holder.getAdapterPosition()));
                     }
                 });
             }

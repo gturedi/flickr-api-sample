@@ -1,5 +1,6 @@
 package com.gturedi.flickr;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
@@ -12,8 +13,6 @@ import timber.log.Timber;
 public class App
         extends Application {
 
-    private static Context instance;
-
     static {
         //AppCompatDelegate.setCompatVectorFromSourcesEnabled(true);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -22,6 +21,9 @@ public class App
     /**
      * app level shared context without memory leak problem
      */
+    @SuppressLint("StaticFieldLeak")
+    private static Context instance;
+
     public static Context getContext() {
         return instance;
     }

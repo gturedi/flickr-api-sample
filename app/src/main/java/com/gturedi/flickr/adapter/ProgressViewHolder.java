@@ -8,7 +8,7 @@ import butterknife.ButterKnife;
 /**
  * Created by gturedi on 8.02.2017.
  */
-class ProgressViewHolder
+public class ProgressViewHolder
         extends RecyclerView.ViewHolder {
 
     public ProgressViewHolder(View itemView) {

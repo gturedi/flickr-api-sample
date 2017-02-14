@@ -1,0 +1,23 @@
+def FILE = file("${project.rootDir}/app/version/version.properties")
+def VERSION_CODE = "VERSION_CODE"
+
+project.ext.readVersionCode = {
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(FILE))
+    return versionProps[VERSION_CODE].toInteger()
+}
+
+task increaseVersionCodeTask << {
+    println "increaseVersionCode task started.."
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(FILE))
+    def code = versionProps[VERSION_CODE].toInteger() + 1
+    versionProps[VERSION_CODE] = code.toString()
+    versionProps.store(FILE.newWriter(), null)
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleDebug') {
+        task.dependsOn increaseVersionCodeTask
+    }
+}

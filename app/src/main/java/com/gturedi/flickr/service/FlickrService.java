@@ -69,8 +69,8 @@ public class FlickrService {
             @Override
             public void run() {
                 try {
-                    PhotoInfoModel items = getDetail(id);
-                    EventBus.getDefault().post(new DetailEvent(items, null));
+                    PhotoInfoModel item = getDetail(id);
+                    EventBus.getDefault().post(new DetailEvent(item, null));
                 } catch (IOException | JSONException e) {
                     Timber.e(e);
                     EventBus.getDefault().post(new DetailEvent(null, e));

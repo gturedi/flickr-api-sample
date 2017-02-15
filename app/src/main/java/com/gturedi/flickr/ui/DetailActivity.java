@@ -113,14 +113,14 @@ public class DetailActivity
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    protected void onServiceEvent(DetailEvent event) {
+    public void onServiceEvent(DetailEvent event) {
         //dismissLoadingDialog();
         detailEvent = event;
         if (event.exception == null) {
             tvOwner.setText(event.item.owner.toString());
             tvTitle.setText(event.item.title.toString());
             tvDate.setText(event.item.getFormattedDate());
-            tvViewCount.setText(getResources().getQuantityText(R.plurals.views, event.item.views));
+            tvViewCount.setText(getResources().getQuantityString(R.plurals.views, event.item.views, event.item.views));
         } else {
             tvOwner.setText("-");
             tvTitle.setText("-");

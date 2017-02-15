@@ -51,11 +51,9 @@ public class MainActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getActionBar() != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         navigation.setNavigationItemSelectedListener(this);
         swipe.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));

@@ -41,10 +41,11 @@ public class AppUtil {
     }
 
     public static void bindImage(String url, ImageView target, boolean centerCrop) {
+        Drawable drawable = ContextCompat.getDrawable(target.getContext(), R.drawable.ic_image_24dp);
         DrawableRequestBuilder<String> builder = Glide.with(App.getContext())
                 .load(url)
                 .error(R.drawable.ic_broken_image_24dp)
-                //.placeholder(R.color.gray2)
+                .placeholder(drawable)
                 .crossFade();
         if (centerCrop) builder.centerCrop();
         builder.into(target);

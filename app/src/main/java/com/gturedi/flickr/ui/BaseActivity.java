@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -46,26 +47,6 @@ public abstract class BaseActivity
         EventBus.getDefault().unregister(this);
     }
 
-    protected void dismissLoadingDialog() {
-        if (progressDialog == null) return;
-        progressDialog.dismiss();
-    }
-
-    protected void showLoadingDialog() {
-        // yanlislikla ust uste cagrilabilir
-        if (progressDialog != null) {
-            progressDialog.show();
-            return;
-        }
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.loading));
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-    }
-
     protected void showInfoDialog(String title, String message) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
@@ -75,8 +56,8 @@ public abstract class BaseActivity
                 .show();
     }
 
-    protected void showGeneralError() {
-        AppUtil.createSnackbar(this, R.string.errorMessage).show();
+    protected void showSnack(@StringRes int msgId) {
+        AppUtil.createSnackbar(this, msgId).show();
     }
 
     protected void showConnectionError() {

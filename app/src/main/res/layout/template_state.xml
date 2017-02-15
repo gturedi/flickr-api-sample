@@ -1,0 +1,38 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stateRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/stateProgress"
+        android:layout_width="@dimen/controlSizeLarge"
+        android:layout_height="@dimen/controlSizeLarge"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/marginMedium"
+        app:matProg_barColor="?attr/colorPrimary"
+        app:matProg_progressIndeterminate="true"
+        />
+
+    <ImageView
+        android:id="@+id/stateImage"
+        android:layout_width="@dimen/controlSizeLarge"
+        android:layout_height="@dimen/controlSizeLarge"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/keyLine1"
+        tools:src="@drawable/ic_signal_wifi_off_24dp"
+        />
+
+    <TextView
+        android:id="@+id/stateMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/connectionErrorMessage"
+        />
+
+</LinearLayout>

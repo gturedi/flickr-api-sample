@@ -17,4 +17,5 @@
     <string name="feedbackSubject">Flickr App Feedback</string>
     <string name="about">About</string>
     <string name="aboutText">This app had developed to show simple usage of Flick API by @gturedii.\n\nSource:\nhttps://github.com/gokhan-turedi/flickr-api-sample</string>
+    <string name="emptyText">No items available</string>
 </resources>

@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.gturedi.flickr.App;
 import com.gturedi.flickr.R;
 
+import java.util.List;
+
 /**
  * Created by gturedi on 8.02.2017.
  */
@@ -95,6 +97,10 @@ public class AppUtil {
                 .putExtra(Intent.EXTRA_EMAIL, new String[]{mail})
                 .putExtra(Intent.EXTRA_SUBJECT, subject);
         return Intent.createChooser(intent, App.getContext().getString(R.string.chooserTitle));
+    }
+
+    public static boolean isNullOrEmpty(List list){
+        return list == null || list.size() == 0;
     }
 
 }

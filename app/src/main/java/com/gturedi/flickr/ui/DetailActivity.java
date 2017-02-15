@@ -126,7 +126,7 @@ public class DetailActivity
             tvTitle.setText("-");
             tvDate.setText("-");
             tvViewCount.setText("-");
-            showGeneralError();
+            showSnack(R.string.errorMessage);
         }
     }
 

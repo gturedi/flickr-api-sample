@@ -30,12 +30,21 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/row_photo"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/row_photo"
+                />
+
+        </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

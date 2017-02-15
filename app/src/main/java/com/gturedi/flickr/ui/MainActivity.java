@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.gturedi.flickr.BuildConfig;
 import com.gturedi.flickr.R;
@@ -19,6 +20,7 @@ import com.gturedi.flickr.model.event.SearchEvent;
 import com.gturedi.flickr.service.FlickrService;
 import com.gturedi.flickr.util.AppUtil;
 import com.gturedi.flickr.util.RowClickListener;
+import com.gturedi.flickr.util.ScreenStateManager;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,15 +33,17 @@ public class MainActivity
         implements RowClickListener<PhotoModel>,
         SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private int page = 1;
+    private boolean isLoading;
     private FlickrService flickrService = FlickrService.INSTANCE;
     private PhotoAdapter adapter;
-    private boolean isLoading;
-    private int page = 1;
+    private ScreenStateManager screenStateManager;
 
     @BindView(R.id.drawer) protected DrawerLayout drawer;
     @BindView(R.id.navigation) protected NavigationView navigation;
     @BindView(R.id.toolbar) protected Toolbar toolbar;
     @BindView(R.id.swipe) protected SwipeRefreshLayout swipe;
+    @BindView(R.id.linear) protected LinearLayout linear;
     @BindView(R.id.recycler) protected RecyclerView recycler;
 
     @Override
@@ -66,6 +70,8 @@ public class MainActivity
         setScrollListener();
 
         navigation.getMenu().findItem(R.id.mnVersion).setTitle(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+
+        screenStateManager = new ScreenStateManager(linear);
 
         sendRequest();
     }
@@ -107,32 +113,46 @@ public class MainActivity
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SearchEvent event) {
-        //dismissLoadingDialog();
         isLoading = false;
+
+        // fired by pull to refresh
         if (swipe.isRefreshing()) {
             swipe.setRefreshing(false);
             adapter.clear();
         }
 
-        if (event.exception == null) {
-            //remove progress item
-            adapter.remove(adapter.getItemCount() - 1);
-            adapter.addAll(event.item);
+        if (isScreenEmpty()) {
+            if (event.exception != null) {
+                screenStateManager.showError(R.string.errorMessage);
+            } else if (AppUtil.isNullOrEmpty(event.item)) {
+                screenStateManager.showEmpty(R.string.emptyText);
+            } else {
+                screenStateManager.hideAll();
+                adapter.addAll(event.item);
+            }
         } else {
-            showGeneralError();
+            adapter.remove(adapter.getItemCount() - 1); //remove progress item
+            if (event.exception != null) {
+                showSnack(R.string.errorMessage);
+            } else if (AppUtil.isNullOrEmpty(event.item)) {
+                showSnack(R.string.emptyText);
+            } else {
+                adapter.addAll(event.item);
+            }
         }
     }
 
     private void sendRequest() {
         Timber.i("sendRequest: " + page);
         if (AppUtil.isConnected()) {
-            //showLoadingDialog();
-            // add null , so the adapter will check view_type and show progress bar at bottom
-            adapter.addAll(null);
             isLoading = true;
             flickrService.searchAsync(page++);
+            if (isScreenEmpty()) screenStateManager.showLoading();
+            else adapter.addAll(null); // add null , so the adapter will check view_type and show progress bar at bottom
         } else {
-            showConnectionError();
+            swipe.setRefreshing(false);
+            if (isScreenEmpty()) screenStateManager.showConnectionError();
+            else showConnectionError();
         }
     }
 
@@ -154,6 +174,10 @@ public class MainActivity
                 }
             }
         });
+    }
+
+    private boolean isScreenEmpty() {
+        return adapter == null || adapter.getItemCount() == 0;
     }
 
 }

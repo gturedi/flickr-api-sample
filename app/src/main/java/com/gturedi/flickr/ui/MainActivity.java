@@ -31,7 +31,8 @@ import timber.log.Timber;
 public class MainActivity
         extends BaseActivity
         implements RowClickListener<PhotoModel>,
-        SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private int page = 1;
     private boolean isLoading;

@@ -1,7 +1,7 @@
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 
-def configDir = "${project.rootDir}/app/codeAnalysis"
+def configDir = "${project.rootDir}/gradle/quality"
 def reportDir = "${project.buildDir}/reports"
 def ignoreErrors = true
 
@@ -40,10 +40,10 @@ task findbugs(type: FindBugs) {
         xml.enabled = false
         html.enabled = true
         xml {
-            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            destination "$reportDir/findbugs/findbugs.xml"
         }
         html {
-            destination "$project.buildDir/reports/findbugs/findbugs.html"
+            destination "$reportDir/findbugs/findbugs.html"
         }
     }
 

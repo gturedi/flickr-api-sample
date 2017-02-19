@@ -1,7 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "com.jakewharton.butterknife"
-apply from: 'codeAnalysis/analysis.gradle'
-apply from: 'version/version.gradle'
+apply from: '../gradle/quality/quality.gradle'
+apply from: '../gradle/version/version.gradle'
 
 def SUPPORT_VERSION = "25.1.1"
 def OKHTTP_VERSION = "3.6.0"
@@ -19,7 +19,6 @@ android {
         versionName "1.0.$versionCode"
         vectorDrawables.useSupportLibrary = true
     }
-
 }
 
 dependencies {

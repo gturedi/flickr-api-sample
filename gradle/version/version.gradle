@@ -1,4 +1,4 @@
-def FILE = file("${project.rootDir}/app/version/version.properties")
+def FILE = file("${project.rootDir}/gradle/version/version.properties")
 def VERSION_CODE = "VERSION_CODE"
 
 project.ext.readVersionCode = {

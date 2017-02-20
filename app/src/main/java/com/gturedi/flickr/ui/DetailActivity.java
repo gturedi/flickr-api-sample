@@ -36,6 +36,8 @@ public class DetailActivity
 
     private static final String EXTRA_INDEX = "EXTRA_INDEX";
     private static final String EXTRA_ITEMS = "EXTRA_ITEMS";
+    private static final String ERROR_LITERAL = "-";
+
     private List<PhotoModel> items;
     private final FlickrService flickrService = FlickrService.INSTANCE;
     private DetailEvent detailEvent;
@@ -122,10 +124,10 @@ public class DetailActivity
             tvDate.setText(event.item.getFormattedDate());
             tvViewCount.setText(getResources().getQuantityString(R.plurals.views, event.item.views, event.item.views));
         } else {
-            tvOwner.setText("-");
-            tvTitle.setText("-");
-            tvDate.setText("-");
-            tvViewCount.setText("-");
+            tvOwner.setText(ERROR_LITERAL);
+            tvTitle.setText(ERROR_LITERAL);
+            tvDate.setText(ERROR_LITERAL);
+            tvViewCount.setText(ERROR_LITERAL);
             showSnack(R.string.errorMessage);
         }
     }

@@ -9,6 +9,8 @@ import java.util.Date;
 public class PhotoInfoModel
         extends BaseModel {
 
+    public static final int BUFFER = 1000;
+
     public long id;
     public long dateuploaded;
     public int views;
@@ -19,7 +21,7 @@ public class PhotoInfoModel
 
     public String getFormattedDate() {
         // service short timeStamp veriyor o yuzden bin ile carpiyoruz
-        return SimpleDateFormat.getDateInstance().format(new Date(dateuploaded * 1000));
+        return SimpleDateFormat.getDateInstance().format(new Date(dateuploaded * BUFFER));
     }
 
 }

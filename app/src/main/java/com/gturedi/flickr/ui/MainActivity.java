@@ -70,7 +70,8 @@ public class MainActivity
         recycler.setLayoutManager(new LinearLayoutManager(this));
         setScrollListener();
 
-        navigation.getMenu().findItem(R.id.mnVersion).setTitle(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
+        navigation.getMenu().findItem(R.id.mnVersion)
+                .setTitle(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")");
 
         screenStateManager = new ScreenStateManager(linear);
 

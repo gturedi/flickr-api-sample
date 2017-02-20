@@ -61,12 +61,13 @@ public abstract class BaseActivity
     }
 
     protected void showConnectionError() {
-        AppUtil.createSnackbar(this, R.string.connectionErrorMessage).setAction(R.string.settings, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-            }
-        }).show();
+        AppUtil.createSnackbar(this, R.string.connectionErrorMessage)
+                .setAction(R.string.settings, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                }).show();
     }
 
 }

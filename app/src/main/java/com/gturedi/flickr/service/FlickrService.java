@@ -29,8 +29,8 @@ import timber.log.Timber;
 /**
  * Created by gturedi on 7.02.2017.
  * <p>
- * used greenRobot's eventBus for asynchronous operations because it is android optimized for android so take care of activity/fragment lifecycle.
- * when activity destroyed it does not receive events thus prevents npe.
+ * used greenRobot's eventBus for asynchronous operations because it is android optimized for android so take care
+ * of activity/fragment lifecycle. when activity destroyed it does not receive events thus prevents npe.
  */
 public class FlickrService {
 
@@ -38,7 +38,8 @@ public class FlickrService {
     public static final int PAGE_SIZE = 15;
     private static final long CACHE_SIZE_IN_MB = 10 * 1024 * 1024;
     private static final String API_KEY = "04a42d236e746206fbbf64245342dd2d";
-    private static final String URL_BASE = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=" + API_KEY;
+    private static final String URL_BASE = "https://api.flickr.com/services/rest/"
+            + "?format=json&nojsoncallback=1&api_key=" + API_KEY;
     private static final String URL_SEARCH = "&method=flickr.photos.search&tags=mode&per_page=" + PAGE_SIZE + "&page=";
     private static final String URL_DETAIL = "&method=flickr.photos.getInfo&photo_id=";
     private static final String CACHE_PATH = App.getContext().getCacheDir().getAbsolutePath();

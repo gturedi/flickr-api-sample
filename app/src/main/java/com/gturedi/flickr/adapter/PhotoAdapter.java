@@ -52,7 +52,8 @@ public class PhotoAdapter
                 vh.image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        rowClickListener.onRowClicked(holder.getAdapterPosition(), items.get(holder.getAdapterPosition()));
+                        rowClickListener.onRowClicked(holder.getAdapterPosition(),
+                                items.get(holder.getAdapterPosition()));
                     }
                 });
             }

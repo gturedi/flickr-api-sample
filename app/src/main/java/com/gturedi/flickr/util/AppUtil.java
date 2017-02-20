@@ -34,6 +34,7 @@ public class AppUtil {
     private AppUtil() {
 
     }
+
     public static boolean isConnected() {
         ConnectivityManager connectivitymanager = (ConnectivityManager) App.getContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -62,14 +63,14 @@ public class AppUtil {
     // http://www.donnfelker.com/quick-and-easy-statelistdrawables-in-android-with-one-png/
     public static void setVectorBg(View target, @DrawableRes int drRes, @ColorRes int normalRes,
                                    @ColorRes int pressedRes) {
-        int[][] states = new int[][] {
-                new int[] {
+        int[][] states = new int[][]{
+                new int[]{
                         android.R.attr.state_pressed},
-                new int[] {
+                new int[]{
 
                 }
         };
-        int[] colors = new int[] {
+        int[] colors = new int[]{
                 ContextCompat.getColor(target.getContext(), pressedRes),
                 ContextCompat.getColor(target.getContext(), normalRes)
         };
@@ -99,7 +100,7 @@ public class AppUtil {
         return Intent.createChooser(intent, App.getContext().getString(R.string.chooserTitle));
     }
 
-    public static boolean isNullOrEmpty(List list){
+    public static boolean isNullOrEmpty(List list) {
         return list == null || list.size() == 0;
     }
 

@@ -8,12 +8,11 @@ def ignoreErrors = true
 android {
     lintOptions {
         abortOnError !ignoreErrors
-        xmlReport true
+        xmlReport false
         htmlReport true
         absolutePaths false
         lintConfig file("$configDir/lint.xml")
-        htmlOutput file("$reportDir/lint/lintt.html")
-        xmlOutput file("$reportDir/lint/lintt.xml")
+        htmlOutput file("$reportDir/lintReport.html")
     }
 }
 
@@ -24,33 +23,31 @@ task checkstyle(type: Checkstyle) {
     source 'src/main/java'
     include '**/*.java'
     classpath = files()
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html.destination "$reportDir/checkstyle.html"
+    }
 }
 
 task findbugs(type: FindBugs) {
     ignoreFailures = ignoreErrors
     effort = "max"
     reportLevel = "high"
-    //excludeFilter = new File("${project.rootDir}/config/quality/findbugs/findbugs-filter.xml")
-    classes = files("${project.rootDir}/app/build/intermediates/classes")
-
+    excludeFilter = new File("$configDir/findbugsExludeFilter.xml")
+    classes = files("${project.rootDir}/app/build/intermediates/classes/debug/com/gturedi")
+    classpath = files()
     source 'src'
     include '**/*.java'
-
     reports {
         xml.enabled = false
         html.enabled = true
-        xml {
-            destination "$reportDir/findbugs/findbugs.xml"
-        }
-        html {
-            destination "$reportDir/findbugs/findbugs.html"
-        }
+        html.destination "$reportDir/findbugs.html"
     }
-
-    classpath = files()
 }
 
 // http://vincentbrison.com/2014/07/19/how-to-improve-quality-and-syntax-of-your-android-code
+// check.dependsOn 'checkstyle', 'pmd', 'findbugs'
 afterEvaluate {
     if (project.tasks.findByName('check')) {
         check.dependsOn 'lint', 'checkstyle', 'findbugs'

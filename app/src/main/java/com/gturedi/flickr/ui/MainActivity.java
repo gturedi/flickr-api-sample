@@ -36,7 +36,7 @@ public class MainActivity
 
     private int page = 1;
     private boolean isLoading;
-    private FlickrService flickrService = FlickrService.INSTANCE;
+    private final FlickrService flickrService = FlickrService.INSTANCE;
     private PhotoAdapter adapter;
     private ScreenStateManager screenStateManager;
 
@@ -80,13 +80,8 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        if (item.getItemId() == android.R.id.home) drawer.openDrawer(GravityCompat.START);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

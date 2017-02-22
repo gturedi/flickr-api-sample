@@ -29,6 +29,9 @@
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
     </rule>
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="ConfusingTernary"/>
+    </rule>
     <!--<rule ref="rulesets/java/coupling.xml"/>-->
     <!--<rule ref="rulesets/java/javabeans.xml"/>-->
     <!--<rule ref="rulesets/java/naming.xml"/>-->

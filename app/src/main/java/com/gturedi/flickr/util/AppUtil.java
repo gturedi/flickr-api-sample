@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by gturedi on 8.02.2017.
  */
-public class AppUtil {
+public final class AppUtil {
 
     public static final String FEEDBACK_MAIL = "turedi.gokhan@gmail.com";
     private static final String MIME_TYPE_SHARE = "text/plain";
@@ -101,7 +101,7 @@ public class AppUtil {
     }
 
     public static boolean isNullOrEmpty(List list) {
-        return list == null || list.size() == 0;
+        return list == null || list.isEmpty();
     }
 
 }

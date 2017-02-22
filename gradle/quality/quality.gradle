@@ -1,5 +1,6 @@
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'pmd'
 
 def configDir = "${project.rootDir}/gradle/quality"
 def reportDir = "${project.buildDir}/reports"
@@ -43,6 +44,18 @@ task findbugs(type: FindBugs) {
         xml.enabled = false
         html.enabled = true
         html.destination "$reportDir/findbugs.html"
+    }
+}
+
+task pmd(type: Pmd) {
+    ignoreFailures = ignoreErrors
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html.destination "$reportDir/pmd.html"
     }
 }
 

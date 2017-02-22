@@ -167,12 +167,9 @@ public class MainActivity
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-                if (!isLoading) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0
-                            && totalItemCount >= FlickrService.PAGE_SIZE) {
-                        sendRequest();
-                    }
+                if (!isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0 && totalItemCount >= FlickrService.PAGE_SIZE) {
+                    sendRequest();
                 }
             }
         });

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by gturedi on 8.02.2017.
@@ -19,6 +20,7 @@ public abstract class BaseFragment
     @Override
     public void onStart() {
         super.onStart();
+        Timber.i("onStart");
         //EventBus.getDefault().register(this);
     }
 
@@ -32,6 +34,7 @@ public abstract class BaseFragment
     @Override
     public void onStop() {
         super.onStop();
+        Timber.i("onStop");
         //EventBus.getDefault().unregister(this);
     }
 

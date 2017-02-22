@@ -1,6 +1,5 @@
 package com.gturedi.flickr.ui;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -22,8 +21,6 @@ import timber.log.Timber;
  */
 public abstract class BaseActivity
         extends AppCompatActivity {
-
-    private ProgressDialog progressDialog;
 
     @Override
     public void onStart() {

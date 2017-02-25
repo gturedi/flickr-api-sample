@@ -29,7 +29,7 @@ import butterknife.BindView;
 import timber.log.Timber;
 
 public class MainActivity
-        extends BaseActivity
+        extends AbstractBaseActivity
         implements RowClickListener<PhotoModel>,
         SwipeRefreshLayout.OnRefreshListener,
         NavigationView.OnNavigationItemSelectedListener {

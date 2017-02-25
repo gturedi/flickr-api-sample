@@ -12,7 +12,7 @@ import timber.log.Timber;
 /**
  * Created by gturedi on 8.02.2017.
  */
-public abstract class BaseFragment
+public abstract class AbstractBaseFragment
         extends Fragment {
 
     protected abstract int getLayout();

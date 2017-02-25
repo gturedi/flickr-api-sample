@@ -21,7 +21,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * Created by gturedi on 8.02.2017.
  */
 public class DetailFragment
-        extends BaseFragment {
+        extends AbstractBaseFragment {
 
     private static final String EXTRA_ITEM = "EXTRA_ITEM";
 

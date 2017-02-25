@@ -32,7 +32,7 @@ import timber.log.Timber;
  * Created by gturedi on 8.02.2017.
  */
 public class DetailActivity
-        extends BaseActivity {
+        extends AbstractBaseActivity {
 
     private static final String EXTRA_INDEX = "EXTRA_INDEX";
     private static final String EXTRA_ITEMS = "EXTRA_ITEMS";

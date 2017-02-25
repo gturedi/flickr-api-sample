@@ -19,7 +19,7 @@ import timber.log.Timber;
 /**
  * Created by gturedi on 7.02.2017.
  */
-public abstract class BaseActivity
+public abstract class AbstractBaseActivity
         extends AppCompatActivity {
 
     @Override

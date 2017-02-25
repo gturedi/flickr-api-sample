@@ -7,7 +7,7 @@ public class ContentModel
         extends BaseModel {
 
     @SuppressWarnings("membername")
-    public String _content;
+    public String _content; // NOPMD
 
     @Override
     public String toString() {
